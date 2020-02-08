@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pie_Demo</title>
+
+    <!-- js链接 -->
+    <script src="../static/js/echarts.min.js"></script>
+</head>
+<body>
+<div id="container" style="width: 100%; height: 500%;"></div>
+<script>
+
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: '气旋强度数量统计图',
+            // subtext: '',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 500,
+            y: 'center',
+            data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: [30, 110],
+                center: ['50%', '50%'],
+                roseType: 'area',
+                data: [
+                    {value: 10, name: 'rose1'},
+                    {value: 5, name: 'rose2'},
+                    {value: 15, name: 'rose3'},
+                    {value: 25, name: 'rose4'},
+                    {value: 20, name: 'rose5'},
+                    {value: 35, name: 'rose6'},
+                    {value: 30, name: 'rose7'},
+                    {value: 40, name: 'rose8'}
+                ]
+            }
+        ]
+    };
+
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>图表</title>
+
+    <script src="http://guangzhou.auto.qq.com/js/echarts.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+
+    <div id="main" style="width: 1180px;height:450px;"></div>
+
+</body>
+
+<script type="text/javascript">
+
+    var myChart = echarts.init(document.getElementById('main'));
+
+    var dataX = ["2018-2-26", "2018-2-24", "2018-2-22", "2018-2-20", "2018-2-18", "2018-2-16", "2018-2-14", "2018-2-12", "2018-2-10", "2018-2-8", "2018-2-6", "2018-2-4"],
+
+        dataY1 = [523, 700, 825, 620, 873, 943, 432, 721, 201, 340, 462, 243],
+
+        dataY2 = [175, 260, 345, 592, 320, 431, 142, 189, 80, 150, 124, 89];
+
+    var option = {
+
+        title: {
+
+        }, grid: {
+
+            bottom: 70
+
+        },
+        tooltip: {
+
+            trigger: 'axis'
+
+        }, dataZoom: [
+
+            {
+
+                type: 'slider',
+
+                show: true,
+
+                realtime: true,
+
+                start: 0,
+
+                end: 50
+
+            },
+
+            {
+
+                type: 'inside',
+
+                show: true,
+
+                realtime: true,
+
+                start: 0,
+
+                end: 50
+
+            }
+
+        ], legend: {
+
+            data: ['气旋强度', '气旋速度'],
+
+            itemGap: 30,
+
+            itemWidth: 70,
+
+            itemHeight: 12,
+
+        }, xAxis: {
+
+            data: dataX,
+
+        }, yAxis: [{
+
+            name: '气旋强度',
+
+            nameTextStyle: {
+
+                color: '#666666',
+
+                fontWeight: 'bolder',
+
+                fontSize: 14
+
+            },
+
+            axisLabel: {
+
+                color: '#333333',
+
+                fontSize: 14
+
+            }
+
+        }, {
+
+            name: '气旋速度',
+
+            nameTextStyle: {
+
+                color: '#666666',
+
+                fontWeight: 'blod',
+
+                fontSize: 14
+
+            }
+
+        }], series: [
+
+            {
+
+                name: '气旋强度',
+
+                type: 'line',
+
+                data: dataY1,
+
+                yAxisIndex: 0,
+
+                symbol: 'circle',
+
+                symbolSize: 3,
+
+                //拐点标志样式
+
+                itemStyle: {
+
+                    normal: {
+
+                        color: '#FF5100',
+
+                        lineStyle: { color: '#FF5100', width: '1.5' },
+
+                        areaStyle: { type: 'default' }
+
+                    }
+
+                },
+
+                //渐变橙白
+
+                areaStyle: {
+
+                    normal: {
+
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+
+                            offset: 0,
+
+                            color: 'rgba(255,213,193,0.0)'
+
+                        }, {
+
+                            offset: 0.8,
+
+                            color: 'rgba(255,255,255,0.0)'
+
+                        }])
+
+                    }
+
+                }
+
+            }, {
+
+                name: '气旋速度',
+
+                type: 'line',
+
+                data: dataY2,
+
+                yAxisIndex: 1,
+
+                symbol: 'circle',
+
+                symbolSize: 3,
+
+                //拐点标志样式
+
+                itemStyle: {
+
+                    normal: {
+
+                        color: '#2B9BF8',
+
+                        lineStyle: { color: '#2B9BF8', width: '1.5' },
+
+                        areaStyle: { type: 'default' }
+
+                    }
+
+                },
+
+                //渐变蓝白
+
+                areaStyle: {
+
+                    normal: {
+
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+
+                            offset: 0,
+
+                            color: 'rgba(189,221,248,0)'
+
+                        }, {
+
+                            offset: 0.8,
+
+                            color: 'rgba(255,255,255,0.2)'
+
+                        }])
+
+                    }
+
+                }
+
+            }]
+
+    };
+
+    myChart.setOption(option);
+
+</script>
+
+</html>

@@ -1,0 +1,614 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>大体布局</title>
+
+    <!-- 链接css文件 -->
+    <link href="./static/css/layout.css" rel="stylesheet" type="text/css">
+    <link href="./static/css/jquery.range.css" rel="stylesheet" type="text/css" />
+
+    <!-- 链接js文件 -->
+    <script src="./static/js/echarts.min.js"></script>
+    <script src="./static/js/d3.v3.min.js"></script>
+    <script src="./static/js/d3.js"></script>
+    <script src="./static/js/jquery-3.3.1.js"></script>
+    <script src="./static/js/jquery.range.js"></script>
+    <script src="./static/js/draw.js"></script>
+
+
+    <!-- 百度地图 -->
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=CiLINNZQQ69agzWQa4TI8UH818LPBtTB"></script>
+    <script type="text/javascript" src="http://lbsyun.baidu.com/jsdemo/data/points-sample-data.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+    <style type="text/css">
+
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /*hide bmap logo*/
+        .anchorBL {
+            display: none;
+        } 
+
+        .displayColor {
+            float: right;
+            position: absolute;
+            top: 10px;
+            left: 950px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            /*border: 1px solid red;*/
+        }
+
+        .displayColor ul li {
+            font-family: 'Times New Roman';
+            list-style: none;
+            font-size: 18px;
+            margin: 8px;
+            margin-top: 15px;
+        }
+
+
+        .displayColor ul li div {
+            width: 20px;
+            height: 20px;
+            border-radius: 15px;
+            float: left;
+            margin-right: 8px;
+        }
+
+        #top {
+
+            position: absolute;
+            top: 10px;
+            right: 120px;
+        }
+
+        #pie {
+            /*border: 1px solid black;*/
+            position: absolute;
+            top: 217px;
+            
+            right: 10px;
+        }
+
+        #map {
+            position: absolute;
+            top: 10px;
+            left: 40px;
+            
+        }
+        #line {
+            position: absolute;
+            top: 550px;
+            left: 10px;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+    <!-- 菜单栏 -->
+    <div id="top">
+
+        <!-- 年月选择 -->
+        <div class="yearmonth_css">
+            <span>年份</span>
+            <select id="yearmonth_1">
+                <option value="1990">1990</option>
+                <option value="1991">1991</option>
+                <option value="1992">1992</option>
+                <option value="1993">1993</option>
+                <option value="1994">1994</option>
+                <option value="1995">1995</option>
+                <option value="1996">1996</option>
+                <option value="1997">1997</option>
+                <option value="1998">1998</option>
+                <option value="1999">1999</option>
+                <option value="2000">2000</option>
+                <option value="2001">2001</option>
+                <option value="2002">2002</option>
+                <option value="2003">2003</option>
+                <option value="2004">2004</option>
+                <option value="2005">2005</option>
+                <option value="2006">2006</option>
+                <option value="2007">2007</option>
+                <option value="2008">2008</option>
+                <option value="2009">2009</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+            </select>
+            <span>月份</span>
+            <select id="yearmonth_2">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <button type="button" class="submit_button" id="yearmonth_submit">OK</button>
+
+        </div>
+        <br />
+        <!-- 年份选择 -->
+        <div class="year_css">
+            <span>年份</span>
+            <select id="year">
+                <option value="1990">1990</option>
+                <option value="1991">1991</option>
+                <option value="1992">1992</option>
+                <option value="1993">1993</option>
+                <option value="1994">1994</option>
+                <option value="1995">1995</option>
+                <option value="1996">1996</option>
+                <option value="1997">1997</option>
+                <option value="1998">1998</option>
+                <option value="1999">1999</option>
+                <option value="2000">2000</option>
+                <option value="2001">2001</option>
+                <option value="2002">2002</option>
+                <option value="2003">2003</option>
+                <option value="2004">2004</option>
+                <option value="2005">2005</option>
+                <option value="2006">2006</option>
+                <option value="2007">2007</option>
+                <option value="2008">2008</option>
+                <option value="2009">2009</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+            </select>
+
+            <button type="button" class="submit_button" id="year_submit">OK</button>
+        </div>
+        <br />
+        <!-- 年份范围选择 -->
+        <div class="yearrange_css">
+            <div>
+                <span>年份范围</span>
+                <br />
+                <br />
+            </div>
+
+            <div class="yearRange_div">
+                <input class="range-slider" id="chooseyear" value="1990,2013" />
+                <br>
+                <button class="button" id="yearRange_Select">提交</button>
+            </div>
+
+        </div>
+        <br />
+        <!-- 动画控制按钮 -->
+        <div>
+            <div>
+                <button id="Stop_button">暂停</button>
+           
+                        <button id="show_hot">显示热力图</button>
+                        <button id="close_hot">关闭热力图</button>
+                  
+            </div>
+
+        </div>
+
+    </div>
+    <!-- 主视图 -->
+    <div id="main">
+
+        <!-- 地图 -->
+        <div id="map" style="width: 65%; height: 610px;"></div>
+        <div class="displayColor">
+            <ul>
+                <li><div style="background:rgba(222, 0, 0, 0.5)"> </div>TD or None</li>
+                <li><div style="background:rgba(70, 163, 255, 0.5)"> </div>TD</li>
+                <li><div style="background:rgba(255, 88, 9, 0.5)"> </div>TS</li>
+                <li><div style="background:rgba(111, 183, 183, 0.5)"> </div>STS</li>
+                <li><div style="background:rgba(238, 130, 238, 0.5)"> </div>TY</li>
+                <li><div style="background:rgba(115, 115, 185, 0.5)"> </div>STY</li>
+                <li><div style="background:rgba(174, 87, 167, 0.5)"> </div>SuperTY</li>
+            </ul>
+        </div>
+
+        <!-- 饼图 -->
+        <div id="pie" style="width: 500px; height: 400px;"></div>
+
+        <!-- 折线图 -->
+        <div id="bar_press" style="width: 550px; height: 500px"></div>
+
+        <div id="bar_speed" style="width: 550px; height: 500px"></div>
+
+    </div>
+    <script>
+
+        var map = new BMap.Map("map", {});  // 创建Map实例
+
+        map.centerAndZoom(new BMap.Point(105.000, 38.000), 4
+
+        );  // 初始化地图,设置中心点坐标和地图级别
+
+        map.enableScrollWheelZoom();    //启用滚轮放大缩小
+
+        // 热力图
+        var heatmapOverlay;
+        
+        // 定义变量
+        var cycloneaYearNum = 0; //节点总年份数的数量
+        var cycloneNum = 0; // 节点中的气旋数量
+        var cyclonePointNum = 0; // 当前这条气旋的点数
+        var isPause = true; // 控制是否暂停继续
+        var dataset; // 数据集
+        var t; // 控制暂停继续
+        var xc = 0; 
+
+
+
+        // 选中地图中气旋信息的全局变量
+
+        var nodeInfo;
+
+
+
+        // 根据气旋强度不同进行渐变着色
+        var color = ["rgba(222, 0, 0, 0.6)", "rgba(70, 163, 255, 0.6)", "rgba(255, 88, 9, 0.6)", "rgba(111, 183, 183, 0.6)", "rgba(238, 130, 238, 0.6)",
+            "rgba(115, 115, 185, 0.6)", "rgba(174, 87, 167, 0.6)", "rgba(213, 75, 0, 0.6)", "rgba(222, 55, 0, 0.6)", "rgba(232, 36, 0, 0.6)"];  // 气旋颜色数组
+        
+
+        $(document).ready(function () {
+
+            // 显示热力图
+            $("#show_hot").click(function () {
+                map.clearOverlays()
+                clearInterval(t); //停止调用
+                // 绘制热力图
+                $.ajax({
+                    type: 'post',
+                    url: '/cyclonehotyear',
+                    data: { 'year': 1996 },
+                    success: function (dataset1) {
+                        dataset1 = JSON.parse(dataset1);
+                        console.log(dataset1);
+
+                        heatmapOverlay = new BMapLib.HeatmapOverlay({ "radius": 20 });
+                        map.addOverlay(heatmapOverlay);
+                        heatmapOverlay.setDataSet({ data: dataset1, max: 10 });
+                        heatmapOverlay.show();
+                        
+                    },
+                    error: function (error) {
+                        alert("数据请求错误！");
+                    }
+                });
+                
+                
+            });
+
+            // 关闭热力图
+
+            $("#close_hot").click(function () {
+                heatmapOverlay.hide();
+            });
+            // 暂停
+            $("#Stop_button").click(function () {
+
+                if (isPause) { // 暂停
+                    isPause = !isPause;
+                    this.innerHTML = "继续";
+
+                    clearInterval(t); //停止调用
+
+                }
+                else { // 继续
+
+                    isPause = !isPause;
+                    this.innerHTML = "暂停";
+
+                    if (xc == 0)
+                        t = setInterval(function () { drawpoint(dataset, t) }, 150);
+                    else
+                        t = setInterval(function () { drawyear(dataset, t) }, 150);
+
+                }
+
+            });
+
+
+            $("#yearmonth_submit").click(function () {
+                xc = 0;
+
+                year = $("#yearmonth_1").val();
+                month = $("#yearmonth_2").val();
+
+                
+
+                // 绘制气旋点
+                $.ajax({
+
+                    type: "post",
+                    url: "/cycloneyearmonth",
+                    data: { "year": year, "month": month },
+                    dataType: "json",
+                    success: function (data) {
+
+                        dataset = null;
+                        cycloneNum = 0; // 节点中的气旋数量
+                        cyclonePointNum = 0; // 当前这条气旋的点数
+                        clearInterval(t); //停止调用
+
+                        if (data.length <= 0) {
+                            alert("此时间范围内不存在数据！");
+
+                        }
+                        else {
+
+                            dataset = data;
+                            // 清除地图上存在的轨迹点
+                            map.clearOverlays();
+
+                            // 开始绘制节点信息
+                            t = setInterval(function () { drawpoint(dataset, t) }, 150);
+
+                        }
+
+                    },
+                    error: function (error) {
+
+                        console.log(error);
+                        alert("数据请求错误！");
+                    }
+
+                });
+
+                  // 绘制饼图
+                 $.ajax({
+
+                     type: "post",
+                     url: "/cyclonepieyearmonth",
+                     data: {"year": year, "month": month},
+                     dataType: "json",
+                     success: function (data) {
+
+                         drawpie(data)
+                     },
+                     error: function () {
+
+                         alert("数据请求错误！");
+                     }
+                 });
+
+                
+
+                  // 绘制折线图
+                 $.ajax({
+
+                     type: "post",
+                     url: "/cyclonelineyearmonth",
+                     data: {"year": year, "month": month},
+                     dataType: "json",
+                     success: function (data) {
+
+                         drawbar_press(data);
+                         drawbar_speed(data);
+                     },
+                     error: function () {
+
+                         alert("数据请求错误！");
+                     }
+                });
+
+
+               
+
+
+            });
+
+
+            $("#year_submit").click(function () {
+
+                xc = 0;
+                // 获取年份
+                year = $("#year").val();
+
+                // 绘制气旋点
+                $.ajax({
+
+                    type: "post",
+                    url: "/cycloneyear",
+                    data: { "year": year },
+                    dataType: "json",
+                    success: function (data) {
+
+                        dataset = null;
+                        cycloneNum = 0; // 节点中的气旋数量
+                        cyclonePointNum = 0; // 当前这条气旋的点数
+                        clearInterval(t); //停止调用
+
+                        if (data.length <= 0) {
+                            alert("此时间范围内不存在数据！");
+
+                        }
+                        else {
+
+                            dataset = data;
+                            // 清除地图上存在的轨迹点
+                            map.clearOverlays();
+
+                            // 开始绘制节点信息
+                            t = setInterval(function () { drawpoint(dataset, t) }, 150);
+
+                        }
+
+
+
+                    },
+                    error: function (error) {
+
+                        console.log(error);
+                        alert("数据请求错误！");
+                    }
+
+                });
+
+                 // 绘制饼图
+                 $.ajax({
+
+                     type: 'post',   // 请求方式
+                     url: '/cyclonepieyear',    // 请求的路由
+                     datatype: 'json',   // 返回的数据格式
+                     data: {'year': year}, // 传递的参数
+                     success: function (data) { // 请求成功执行的函数
+
+                         data = JSON.parse(data)
+                         drawpie(data)
+
+                     },
+                     error: function () {    // 请求失败执行的函数
+
+                         alert('数据请求错误！');
+                     }
+                });
+
+                // 绘制柱状图
+                $.ajax({
+
+                    type: 'post',   // 请求方式
+                    url: '/cyclonelineyear',    // 请求的路由
+                    datatype: 'json',   // 返回的数据格式
+                    data: { 'year': year }, // 传递的参数
+                    success: function (data) { // 请求成功执行的函数
+
+                        console.log("cyclonelineyear数据：")
+                        console.log(data[0]);
+                        data = JSON.parse(data);
+                        drawbar_press(data[0].press)
+                        drawbar_speed(data[1].speed)
+
+                    },
+                    error: function () {    // 请求失败执行的函数
+
+
+
+                        alert('数据请求错误！');
+                    }
+                });
+
+                
+            });
+
+
+            // 选择年份范围
+            $('#yearRange_Select').click(function () {
+
+                xc = 1;
+
+                // 获取年份范围
+                yearRange = $("#chooseyear").val();
+
+                // 将获取的范围分隔开
+                list = yearRange.split(',');
+                start = list[0]; // 起始时间
+                end = list[1]; // 结束时间
+
+                // 绘制气旋点
+                $.ajax({
+
+                    type: 'post',   // 请求方式
+                    url: '/cycloneYearRange',   // 请求的路由
+                    dataType: 'json',   // 返回的数据格式
+                    data: { 'start': start, 'end': end },   // 参数
+                    success: function (data) {  // 服务器响应成功
+
+                        cycloneYearNum = 0; // 节点中年份的数量
+                        cycloneNum = 0; // 节点中的气旋数量
+                        cyclonePointNum = 0; // 当前这条气旋的点数
+                        clearInterval(t); //停止调用
+
+
+                        // 清除地图上存在的轨迹点
+                        map.clearOverlays();
+                        dataset = data;
+                        // 开始绘制节点信息
+                        t = setInterval(function () { drawyear(dataset, t) }, 150);
+                    },
+                    error: function () {    // 服务器响应失败
+
+                        alert('数据返回错误！');
+
+                    }
+
+                });
+
+
+                 // 绘制饼图      
+                 $.ajax({
+
+                     type: 'post',   // 请求方式
+                     url: '/cyclonepieyearrange',    // 请求的路由
+                     dataType: 'json',   // 返回的数据格式
+                     data: { 'start': start, 'end':end }, // 传递的参数
+                     success: function (data) { // 请求成功执行的函数
+                         drawpie(data)
+
+                     },
+                     error: function () {    // 请求失败执行的函数
+
+                         alert('数据请求错误！');
+                     }
+                });
+
+                // 绘制热力图
+
+                $.ajax({
+                    type: 'post',
+                    url: '/cyclonehotyearrange',
+                    data: { 'start': start, 'end': end },
+                    success: function (dataset) {
+
+                        console.log(dataset);
+                        heatmapOverlay.setDataSet({ data: dataset, max: 100 });
+                    },
+                    error: function (error) {
+                        alert("数据请求错误！");
+                    }
+                });
+
+
+            });
+
+
+        });
+
+
+        // 时间范围选择滑条jQuery
+        $('.range-slider').jRange({
+            from: 1990, // 范围下限
+            to: 2013,   // 范围上限
+            step: 1,    // 步长
+            scale: [1990, 2013], // 标识刻度
+            format: '%s',
+            width: 260, // 控件宽度
+            height: 10,
+            showLabels: true,  // 显示提示标签
+            isRange: true,   // 可以选择范围
+            theme: "theme-blue" // 滑条主题颜色
+        });
+
+    </script>
+
+
+</body>
+</html>
